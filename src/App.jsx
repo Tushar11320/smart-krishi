@@ -2,12 +2,13 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+
 import Home from "./pages/Home";
 import Machinery from "./pages/Machinery";
 import Milk from "./pages/Milk";
 import Fertilizer from "./pages/Fertilizers";
-import Tent from "./pages/Tent";
-import Landselling from "./Pages/Landselling";
+import FarmingEquipment from "./pages/FarmingEquipment";
+import Landselling from "./pages/Landselling";
 import Weather from "./pages/Weather";
 import FarmingCrop from "./pages/FarmingCrop";
 import TopDeals from "./pages/TopDeals";
@@ -27,7 +28,7 @@ function App() {
           <Route path="/machinery" element={<Machinery />} />
           <Route path="/milk" element={<Milk />} />
           <Route path="/fertilizers" element={<Fertilizer />} />
-          <Route path="/tent-booking" element={<Tent />} />
+          <Route path="/farming-equipment" element={<FarmingEquipment />} />
           <Route path="/landselling" element={<Landselling />} />
           <Route path="/weather" element={<Weather />} />
           <Route path="/farming-crop" element={<FarmingCrop />} />

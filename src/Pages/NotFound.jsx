@@ -129,6 +129,9 @@ export default function NotFound() {
             <button className="mt-5 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition">
 
               Contact Support
+              Mobile: +91 6262782714
+                       +91 9669525146
+                       
 
             </button>
           </div>
