@@ -2,66 +2,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function WaterSupply() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  let [allProducts, setAllProducts] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
 
-  // Custom Water Supply Data
-  const waterData = [
-    {
-      id: 501,
-      title: "RO Drinking Water (20L Can)",
-      category: "Drinking Water",
-      price: 40,
-      image:
-        "https://images.unsplash.com/photo-1582719478185-3a8c0f6f2a10",
-    },
-    {
-      id: 502,
-      title: "Borewell Water Supply",
-      category: "Agriculture Water",
-      price: 300,
-      image:
-        "https://images.unsplash.com/photo-1581090700227-1e8e3a8c9b7a",
-    },
-    {
-      id: 503,
-      title: "Tank Water Supply (5000L)",
-      category: "Bulk Water",
-      price: 1200,
-      image:
-        "https://images.unsplash.com/photo-1509391366360-2e959784a276",
-    },
-    {
-      id: 504,
-      title: "Farm Irrigation Water",
-      category: "Irrigation",
-      price: 800,
-      image:
-        "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2",
-    },
-    {
-      id: 505,
-      title: "Municipal Water Connection",
-      category: "Domestic Water",
-      price: 500,
-      image:
-        "https://images.unsplash.com/photo-1564417947365-8dbc9d0e6b88",
-    },
-  ];
+  // GET DATA
 
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
 
-        const res = await axios.get(
-          "https://fakestoreapi.com/products"
-        );
+        let res = await fetch("https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=6b3c3baebb435dc6f286b324d8bea1b8");
+        let data = await res.json();
 
-        // API + CUSTOM WATER DATA MERGE
-        setAllProducts([...waterData, ...res.data]);
+        setAllProducts(res.data);
       } catch (error) {
-        console.log("API Error:", error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }

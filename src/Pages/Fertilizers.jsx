@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Fertilizer() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  let [allProducts, setAllProducts] = useState([]);
+  let [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
 
-        const res = await axios.get(
-          "https://fakestoreapi.com/products/category/electronics"
+        let res = await axios.get(
+          "https://fakestoreapi.com/products"
         );
 
         setAllProducts(res.data);
@@ -26,22 +26,41 @@ export default function Fertilizer() {
   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-4">Fertilizers</h2>
+    <div className="min-h-screen bg-green-50 p-6">
+      <h2 className="text-4xl font-bold text-center text-green-700 mb-8">
+        Fertilizers
+      </h2>
 
-      <div className="grid grid-cols-3 gap-4">
-        {isLoading ? (
-          <h1>Loading...</h1>
-        ) : (
-          allProducts.map((p) => (
-            <div key={p.id} className="border p-3 rounded">
-              <img src={p.image} alt={p.title} className="w-32 h-32" />
-              <h3 className="font-bold">{p.title}</h3>
-              <p>${p.price}</p>
+      {isLoading ? (
+        <h1 className="text-center text-2xl">Loading...</h1>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {allProducts.map((p) => (
+            <div
+              key={p.id}
+              className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition"
+            >
+              <img
+                src={p.image}
+                alt={p.title}
+                className="w-full h-48 object-contain"
+              />
+
+              <h3 className="font-bold mt-3 line-clamp-2">
+                {p.title}
+              </h3>
+
+              <p className="text-green-700 font-bold text-lg mt-2">
+                ${p.price}
+              </p>
+
+              <button className="w-full mt-3 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">
+                Buy Now
+              </button>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

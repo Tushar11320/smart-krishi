@@ -1,21 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+
+  const searchRoutes = {
+    machinery: "/machinery",
+    weather: "/weather",
+    crop: "/farmingcrop",
+    crops: "/farmingcrop",
+    fertilizer: "/fertilizer",
+    fertilizers: "/fertilizer",
+    land: "/landselling",
+    milk: "/milk",
+    tent: "/tent",
+    building: "/buildingmaterials",
+    materials: "/buildingmaterials",
+  };
+
+  const performSearch = () => {
+    const value = search.toLowerCase().trim();
+
+    if (!value) {
+      alert("Please enter something to search");
+      return;
+    }
+
+    const route = searchRoutes[value];
+
+    if (route) {
+      navigate(route);
+    } else {
+      alert(`No page found for "${value}"`);
+    }
+  };
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      performSearch();
+    }
+  };
 
   const handleExplore = () => {
-    window.location.href = "/machinery";
+    navigate("/machinery");
   };
 
   const handleLearnMore = () => {
-    window.location.href = "/about";
+    navigate("/about");
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-green-50 to-green-100">
 
+      {/* Search Bar */}
+      <div className="max-w-7xl mx-auto px-6 pt-6">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleSearch}
+            placeholder="Search: machinery, weather, crop, fertilizer..."
+            className="flex-1 px-5 py-4 rounded-xl border-2 border-gray-300 focus:outline-none focus:border-green-500 shadow-lg"
+          />
+
+          <button
+            onClick={performSearch}
+            className="bg-green-600 text-white px-6 py-4 rounded-xl hover:bg-green-700"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+
       {/* Hero Section */}
-      <section className="flex flex-col md:flex-row items-center justify-between px-8 py-20 max-w-7xl mx-auto">
+      <section className="flex flex-col md:flex-row items-center justify-between px-8 py-16 max-w-7xl mx-auto">
 
         <motion.div
           initial={{ opacity: 0, x: -100 }}

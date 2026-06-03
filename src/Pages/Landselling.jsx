@@ -2,34 +2,15 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function LandSelling() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const landData = [
-    {
-      id: 201,
-      title: "Agricultural Land - 2 Acre",
-      category: "Farmland",
-      price: 500000,
-      image:
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef",
-    },
-    {
-      id: 202,
-      title: "Irrigated Farm Plot",
-      category: "Land",
-      price: 750000,
-      image:
-        "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735",
-    },
-  ];
+  let [allProducts, setAllProducts] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
 
-        const res = await axios.get("https://fakestoreapi.com/products");
+        let res = await axios.get("");
 
         setAllProducts([...landData, ...res.data]);
       } catch (error) {

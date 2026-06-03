@@ -2,59 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function MilkSelling() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  let [allProducts, setAllProducts] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
 
-  // Custom Milk Data
-  const milkData = [
-    {
-      id: 401,
-      title: "Fresh Cow Milk",
-      category: "Milk",
-      price: 60,
-      image:
-        "https://images.unsplash.com/photo-1563636619-e9143da7973b",
-    },
-    {
-      id: 402,
-      title: "Buffalo Milk",
-      category: "Milk",
-      price: 70,
-      image:
-        "https://images.unsplash.com/photo-1582719478185-2b3e2b1d7b10",
-    },
-    {
-      id: 403,
-      title: "Organic Farm Milk",
-      category: "Organic",
-      price: 90,
-      image:
-        "https://images.unsplash.com/photo-1604908177522-0407d3c0c0f6",
-    },
-    {
-      id: 404,
-      title: "Milk Packet (1L)",
-      category: "Packaged Milk",
-      price: 55,
-      image:
-        "https://images.unsplash.com/photo-1628088062854-d1870b4553da",
-    },
-    {
-      id: 405,
-      title: "Cold Storage Milk",
-      category: "Dairy",
-      price: 75,
-      image:
-        "https://images.unsplash.com/photo-1615486363973-9b8c6b3d1c6b",
-    },
-  ];
+  
 
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
 
-        const res = await axios.get(
+        let res = await axios.get(
           "https://fakestoreapi.com/products"
         );
 

@@ -2,32 +2,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function FarmingCrop() {
-  const [allProducts, setAllProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  let [allProducts, setAllProducts] = useState([]);
+  let [isLoading, setIsLoading] = useState(true);
 
-  const agricultureProducts = [
-    {
-      id: 101,
-      title: "Soyabean Seeds",
-      category: "Seeds",
-      price: 1200,
-      image: "https://images.unsplash.com/photo-1601593768799-76d7b79b4b63",
-    },
-    {
-      id: 102,
-      title: "Makka (Corn)",
-      category: "Crop",
-      price: 900,
-      image: "https://images.unsplash.com/photo-1560493676-04071c5f467b",
-    },
-  ];
 
   useEffect(() => {
     async function getData() {
       try {
         setIsLoading(true);
 
-        const res = await axios.get("https://fakestoreapi.com/products");
+        let res = await axios.get("");
 
         setAllProducts([...agricultureProducts, ...res.data]);
       } catch (error) {

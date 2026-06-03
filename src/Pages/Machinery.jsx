@@ -4,17 +4,53 @@ export default function Machinery() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // GET DATA
+  const machines = [
+    {
+      name: "Tractor",
+      icon: "🚜",
+      color: "bg-green-600",
+    },
+    {
+      name: "Harvester",
+      icon: "🌾",
+      color: "bg-yellow-600",
+    },
+    {
+      name: "Cultivator",
+      icon: "⚙️",
+      color: "bg-blue-600",
+    },
+    {
+      name: "Seeder",
+      icon: "🌱",
+      color: "bg-purple-600",
+    },
+    {
+      name: "Rotavator",
+      icon: "🔄",
+      color: "bg-red-600",
+    },
+    {
+      name: "Sprayer",
+      icon: "💧",
+      color: "bg-indigo-600",
+    },
+  ];
+
   const fetchBookings = async () => {
     try {
       setLoading(true);
 
       const res = await fetch("http://localhost:5000/machinery");
-      const data = await res.json();
 
+      if (!res.ok) {
+        throw new Error("Failed to fetch bookings");
+      }
+
+      const data = await res.json();
       setBookings(data);
     } catch (err) {
-      console.log(err);
+      console.error("Fetch Error:", err);
     } finally {
       setLoading(false);
     }
@@ -24,77 +60,79 @@ export default function Machinery() {
     fetchBookings();
   }, []);
 
-  // BOOK MACHINE
   const bookMachine = async (name) => {
     try {
-      const res = await fetch("http://localhost:5000/book-machine", {
+      const res = await fetch("http://localhost:5000/machinery", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ machine: name }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          machine: name,
+        }),
       });
 
       const data = await res.json();
 
-      alert(data.message);
+      alert(data.message || `${name} booked successfully`);
 
-      // 🔥 IMPORTANT: refresh from backend
       fetchBookings();
     } catch (err) {
-      console.log(err);
+      console.error("Booking Error:", err);
+      alert("Booking failed");
     }
   };
 
-  const machines = [
-    { name: "Tractor", icon: "🚜", color: "bg-green-600" },
-    { name: "JCB", icon: "🏗️", color: "bg-yellow-600" },
-    { name: "Harvester", icon: "🌾", color: "bg-blue-600" },
-  ];
-
   return (
     <div className="min-h-screen bg-gray-100 p-10">
-
       <h1 className="text-4xl font-bold text-center mb-10">
         🚜 Book Your Machinery
       </h1>
 
-      {/* Machines */}
-      <div className="grid md:grid-cols-3 gap-6">
-
+      {/* Machine Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {machines.map((m, i) => (
-          <div key={i} className="bg-white p-6 rounded-xl shadow text-center">
+          <div
+            key={i}
+            className="bg-white p-6 rounded-xl shadow-lg text-center"
+          >
+            <h2 className="text-5xl mb-3">{m.icon}</h2>
 
-            <h2 className="text-3xl">{m.icon}</h2>
-            <h3 className="text-xl font-bold">{m.name}</h3>
+            <h3 className="text-xl font-bold mb-4">{m.name}</h3>
 
             <button
               onClick={() => bookMachine(m.name)}
-              className={`${m.color} text-white px-4 py-2 mt-4 rounded`}
+              className={`${m.color} text-white px-5 py-2 rounded-lg hover:opacity-90`}
             >
               Book Now
             </button>
-
           </div>
         ))}
-
       </div>
 
-      {/* BOOKINGS */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold mb-4">📦 Booked Machines</h2>
+      {/* Booked Machines */}
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-4">
+          📦 Booked Machines
+        </h2>
 
         {loading ? (
           <p>Loading...</p>
         ) : bookings.length === 0 ? (
           <p>No bookings yet</p>
         ) : (
-          bookings.map((b, i) => (
-            <div key={i} className="bg-white p-3 mb-2 rounded shadow">
-              🚜 {b.machine}
-            </div>
-          ))
+          <div className="space-y-3">
+            {bookings.map((b, i) => (
+              <div
+                key={i}
+                className="bg-white p-4 rounded-lg shadow"
+              >
+                🚜 {b.machine}
+              </div>
+            ))}
+          </div>
         )}
       </div>
-
     </div>
   );
 }
